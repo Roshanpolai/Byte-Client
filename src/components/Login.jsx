@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { login as authLogin } from "../store/authSlice";
 import { Button, Input, Logo } from "./index";
 import { useDispatch } from "react-redux";
-import authService from "../appwrite/auth.appwrite";
+import authService from "../services/auth.service";
 import { useForm } from "react-hook-form";
 
 function Login() {
@@ -50,14 +50,14 @@ function Login() {
                 </p>
                 {error && <p className="text-red-600 mt-8 text-center">{error}</p>}
 
-                // Login Form
+                {/* Login Form */}
                 <form onSubmit={handleSubmit(login)} className="mt-8">
                     <div className="space-y-5">
                         <Input
                             label="Email: "
                             placeholder="Enter your email"
                             type="email"
-                            {...register("email", {         // Spreading 
+                            {...register("email", {        
                                 required: true,
                                 validate: {
                                     // emial pattern validation(regex)

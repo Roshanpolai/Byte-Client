@@ -1,56 +1,56 @@
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
+import { Outlet } from "react-router-dom";
+
 import { login, logout } from "./store/authSlice";
-import authService from "./appwrite/auth.appwrite";
-import Header from "./components/Header/Header.jsx";
-import Footer from "./components/Footer/Footer.jsx";
-import { Outlet } from 'react-router-dom'
-import './App.css'
+import authService from "./services/auth.service";
+
+import Header from "./components/Header/Header";
+import Footer from "./components/Footer/Footer";
 
 function App() {
-  const [loading, setLoading] = useState(true)
-  const dispatch = useDispatch()
-
-  // useEffect(() => {
-  //   authService.getCurrentUser()
-  //   .then((userData) => {
-  //     if (userData) {
-  //       dispatch(login({userData}))
-  //     } else {
-  //       dispatch(logout())
-  //     }
-  //   })
-  //   .finally(() => setLoading(false))
-  // }, [])
+  const [loading, setLoading] = useState(true);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    const checkUser = async () => {
-      const userData = await authService.getCurrentUser();
+    const initializeAuth = async () => {
+      try {
+        const user = await authService.getCurrentUser();
 
-      if (userData) {
-        dispatch(login({ userData }));
-      } 
-      else {
+        if (user) {
+          dispatch(login({ userData: user }));
+        } else {
+          dispatch(logout());
+        }
+      } catch (error) {
         dispatch(logout());
+      } finally {
+        setLoading(false);
       }
-
-      setLoading(false);
     };
 
-    checkUser();
+    initializeAuth();
   }, [dispatch]);
 
-  return !loading ? (
-    <div className='min-h-screen flex flex-wrap content-between bg-gray-400'>
-      <div className='w-full block'>
-        <Header />
-        <main>
-          TODO:  <Outlet />
-        </main>
-        <Footer />
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <h2 className="text-xl font-semibold">Loading...</h2>
       </div>
+    );
+  }
+
+  return (
+    <div className="min-h-screen flex flex-col bg-gray-100">
+      <Header />
+
+      <main className="flex-1">
+        <Outlet />
+      </main>
+
+      <Footer />
     </div>
-  ) : null
+  );
 }
 
 export default App;
