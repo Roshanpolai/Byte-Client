@@ -3,7 +3,6 @@ import Header from "./Header/Header";
 import Footer from "./Footer/Footer";
 import Container from "./container/Container";
 import Logo from "./logo";
-// import LogoutBtn from "./Header/LogoutBtn";
 import RTE from "./RTE";
 import Signup from "./Signup";
 import Login from "./Login";
@@ -13,13 +12,13 @@ import PostCard from "./PostCard";
 import AuthLayout from "./AuthLayout";
 import Input from "./Input";
 import ProfileMenu from "./profile-menu/ProfileMenu";
+import PostListItem from "./PostListItem";
 
 export {
     Header,
     Footer,
     Container,
     Logo,
-    // LogoutBtn,
     RTE,
     Signup,
     Login,
@@ -30,4 +29,5 @@ export {
     Input,
     Select,
     ProfileMenu,
+    PostListItem
 }
