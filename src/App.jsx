@@ -19,12 +19,15 @@ function App() {
 
         if (user) {
           dispatch(login({ userData: user }));
-        } else {
+        } 
+        else {
           dispatch(logout());
         }
-      } catch (error) {
+      } 
+      catch (error) {
         dispatch(logout());
-      } finally {
+      } 
+      finally {
         setLoading(false);
       }
     };
